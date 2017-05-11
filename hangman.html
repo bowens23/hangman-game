@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en-us">
+
+<head>
+  
+</head>
+
+<body>
+<div id ="game"> 
+
+<p>Hangman- Guess the Country!</p>
+<p>Guesses Left:</p>
+<p>Country To Guess:</p>
+<p>Already Guessed:</p>
+</div>
+<script type="text/javascript">
+
+
+        var guessesLeft = 6;
+        var countries = ["america","canada", "greece", "denmark", "czech republic", "hungary", "germany","slovakia", "ireland", "united kingdom", "poland", "austria", "russia", "estonia", "mexico", "kazakhstan", "georgia","france", "tajikistan"];
+        var wordToGuess = countries[Math.floor(Math.random()*countries.length)];
+        var alreadyGuessed=[]
+        var letters= wordToGuess.split("");
+        var screenWord= new Array (letters.length);
+        screenWord.fill("_");
+        console.log (wordToGuess);
+
+document.onkeyup = function (event) {
+  if (guessesLeft>0){
+        var userGuess=event.key;
+        var winCalc = letters.includes(userGuess);
+        var addToGuessesLeft = alreadyGuessed.includes(userGuess);
+
+        if (winCalc===false && addToGuessesLeft===false){
+          alreadyGuessed.push(userGuess);
+            guessesLeft--;
+        }
+
+        for(var i = 0; i < letters.length; i++){
+            if (letters[i] === userGuess){
+              screenWord.splice(i,1,letters[i]);
+          }
+                
+        }
+        var completeCalc = screenWord.includes("_");
+        if (completeCalc===false){
+          alert ("you won");
+          guessesLeft=6;
+          wordToGuess = countries[Math.floor(Math.random()*countries.length)];
+          alreadyGuessed=[]
+          letters= wordToGuess.split("");
+          screenWord= new Array (letters.length);
+          screenWord.fill("_");
+          console.log(wordToGuess);
+        }
+
+  }
+
+  else {
+    alert ("you lost");
+    guessesLeft=6;
+    wordToGuess = countries[Math.floor(Math.random()*countries.length)];
+    alreadyGuessed=[]
+    letters= wordToGuess.split("");
+    screenWord= new Array (letters.length);
+    screenWord.fill("_");
+    console.log (wordToGuess);
+
+
+  }
+        var html = "<p>Press any key to start playing!</p>" +
+        "<p>Guesses Left: " + guessesLeft + "</p>" +
+        "<p>Country To Guess:"+ screenWord + "</p>"+
+        "<p>Already Guessed:"+ alreadyGuessed+"</p>";
+        document.querySelector("#game").innerHTML = html;
+
+}
+</script>
+</body>
+
+</html>
+
